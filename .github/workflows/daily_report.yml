@@ -2,7 +2,7 @@ name: 📈 A股日报
 
 on:
   schedule:
-    # 交易日 17:00 执行（北京时间 = UTC+8，即 UTC 09:00）
+    # 交易日 15:30 执行（北京时间 = UTC+8，即 UTC 07:30）
     - cron: '30 7 * * 1-5'
   workflow_dispatch:  # 支持手动触发
 
