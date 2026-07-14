@@ -1,0 +1,31 @@
+name: 📈 A股日报
+
+on:
+  schedule:
+    # 交易日 17:00 执行（北京时间 = UTC+8，即 UTC 09:00）
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  daily-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 签出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖（使用标准库，无额外依赖）
+        run: |
+          python -m pip install --upgrade pip
+          echo "✅ 使用 Python 标准库，无需额外安装"
+
+      - name: 运行日报脚本
+        run: python main.py
+
+      - name: 执行结果通知
+        if: failure()
+        run: echo "❌ 日报发送失败，请检查日志"
